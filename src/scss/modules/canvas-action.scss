@@ -20,7 +20,7 @@
 		transform: translate(-50%, -50%);
 		z-index: 4;
 	}
-	.canvaswrapper.has-input & {
+	.app.has-input & {
 		opacity: 0;
 		visibility: hidden;
 	}

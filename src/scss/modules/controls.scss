@@ -1,12 +1,13 @@
 .controls {
-	background-color: #1abc9c;
+	background-color: #4d395f;
 	&__button {
 		font-size: 24px;
-		color: #444;
+		color: #fff;
 		display: block;
 		padding: .5em;
 		border-bottom: 1px solid #333;
 		cursor: pointer;
+		text-align: center;
 		&:hover {
 			color: #333;
 			background-color: lighten(#1abc9c, 5%);

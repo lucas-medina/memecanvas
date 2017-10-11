@@ -2,6 +2,8 @@
 const App = (() => {
     
     const $canvasWrapper = document.querySelector('.canvaswrapper');
+    const $app = document.querySelector('.app');
+
 	const canvas = new fabric.Canvas('memeGenerator');
 
 	const app = {
@@ -11,6 +13,11 @@ const App = (() => {
 		},
 		bind(){
 			document.querySelector('.canvas-action__fileinput').addEventListener('change', Canvas.getBaseImage);
+			
+			document.querySelector('[ui-control-upload]').addEventListener('click', UIControls.upload);
+			document.querySelector('[ui-control-expand]').addEventListener('click', UIControls.expand);
+			document.querySelector('[ui-control-centerv]').addEventListener('click', UIControls.centerV);
+			document.querySelector('[ui-control-centerh]').addEventListener('click', UIControls.centerH);
 		}
 	}
 
@@ -80,13 +87,39 @@ const App = (() => {
 				    })
 				});
 
-				$canvasWrapper.classList.add('has-input');
+				$app.classList.add('has-input');
 
 			}
 
 			canvas.clear();
 			reader.readAsDataURL(file);
 
+		}
+	}
+
+	const UIControls = {
+		upload(){
+			document.querySelector('.canvas-action__fileinput').click();
+		},
+		expand(){
+			console.log('works');
+			
+			let image = canvas.getObjects()[0];
+			if (image.width > image.height){
+				image.scaleToHeight(canvas.height);
+			} else {
+				image.scaleToWidth(canvas.width);
+			}
+
+			image.center();
+		},
+		centerH(){
+			let image = canvas.getObjects()[0];
+			image.centerH().setCoords();
+		},
+		centerV(){
+			let image = canvas.getObjects()[0];
+			image.centerV().setCoords();
 		}
 	}
 

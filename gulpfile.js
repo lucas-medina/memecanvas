@@ -21,7 +21,8 @@ gulp.task('styles', () => {
             }),
             pixrem()
         ])).pipe(concat('app.css'))
-        .pipe(gulp.dest('dist/css'));
+        .pipe(gulp.dest('dist/css'))
+        .pipe(bs.stream());
 });
 
 gulp.task('js', () => {
@@ -66,7 +67,7 @@ gulp.task('sync', () => {
     gulp.watch('src/vendor/css/**/*', ['vendorCSS']);
     gulp.watch('src/assets/**/*', ['assets']);
 
-    gulp.watch('dist/**/*').on('change', bs.reload);
+    gulp.watch('dist/**/*.js').on('change', bs.reload);
     gulp.watch('*.html').on('change', bs.reload);
 });
 

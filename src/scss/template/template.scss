@@ -7,7 +7,7 @@
 	padding-right: 12px;
 	margin: 0 auto;
 	&.for-canvas {
-		max-width: 620px;
+		max-width: 512px;
 	}
 }
 .canvaswrapper {
@@ -36,9 +36,37 @@
 // UI
 .ui {
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
+	position: relative;
 	&__canvas {
 		max-width: 512px;
 		width: 100%;
+	}
+	&__controls {
+		position: absolute;
+		top: 0;
+		right: -20px;
+		visibility: hidden;
+		transition: .3s ease .15s;
+		transform: translateX(200%);
+		.app.has-input & {
+			visibility: visible;
+			opacity: 1;
+			transform: translateX(100%);
+		}
+		.controls__button[ui-control-add-sticker]{
+			color: #ff2f2f;
+			transition: .2s ease;
+			i {
+				transition: .2s cubic-bezier(0.78, -0.4, 0.24, 1.45) transform;
+			}
+			&:hover {
+				color: white;
+				background-color: #ff2f2f;
+				i {
+					transform: scale(1.1);
+				}
+			}
+		}
 	}
 }
