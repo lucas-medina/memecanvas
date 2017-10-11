@@ -5,6 +5,7 @@ const App = (() => {
     const $app = document.querySelector('.app');
 
 	const canvas = new fabric.Canvas('memeGenerator');
+	let canvasCurrentObject;
 
 	const app = {
 		init(){
@@ -74,7 +75,7 @@ const App = (() => {
 					canvas.add(target).setActiveObject(target);
 					target.center();
 
-					// target.setCoords();
+					// CHANGE THIS LATER!
 					canvas.renderAll();
 
 					canvas.forEachObject(function(obj) {
@@ -84,7 +85,12 @@ const App = (() => {
 							scaling: setCoords,
 							rotating: setCoords
 						});
-				    })
+				    });
+
+					// Defining canvasCurrentObject
+					canvasCurrentObject = canvas.getActiveObject();
+					console.log(canvasCurrentObject);
+
 				});
 
 				$app.classList.add('has-input');
@@ -102,24 +108,19 @@ const App = (() => {
 			document.querySelector('.canvas-action__fileinput').click();
 		},
 		expand(){
-			console.log('works');
-			
-			let image = canvas.getObjects()[0];
-			if (image.width > image.height){
-				image.scaleToHeight(canvas.height);
+			if (canvasCurrentObject.width > canvasCurrentObject.height){
+				canvasCurrentObject.scaleToHeight(canvas.height);
 			} else {
-				image.scaleToWidth(canvas.width);
+				canvasCurrentObject.scaleToWidth(canvas.width);
 			}
 
-			image.center();
+			canvasCurrentObject.center();
 		},
 		centerH(){
-			let image = canvas.getObjects()[0];
-			image.centerH().setCoords();
+			canvasCurrentObject.centerH().setCoords();
 		},
 		centerV(){
-			let image = canvas.getObjects()[0];
-			image.centerV().setCoords();
+			canvasCurrentObject.centerV().setCoords();
 		}
 	}
 
