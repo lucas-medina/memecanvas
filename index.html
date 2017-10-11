@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="dist/css/vendor.css">
+    <link rel="stylesheet" href="dist/css/app.css">
+</head>
+
+<body>
+    <form action="">
+        <main class="page-wrapper">
+            <section class="container for-canvas">
+                <div class="ui">
+                    <div class="ui__canvas">
+                    	<div class="canvaswrapper">
+	                        <canvas id="memeGenerator"></canvas>
+	                        <div class="canvas-action">
+	                            <p class="canvas-action__dialog">Insira sua imagem, e mãos à obra!</p>
+	                            <input class="canvas-action__fileinput" type="file">
+	                        </div>
+                        </div>
+                    </div>
+                    <div class="ui__controls controls">
+                    	<nav class="controls__nav">
+                    		<a control control-upload title="Atualizar imagem" class="controls__button"><i class="fa fa-upload"></i></a>
+                    		<a control control-expand title="Expandir imagem" class="controls__button"><i class="fa fa-arrows-alt"></i></a>
+                    		<a control control-center title="Centralizar" class="controls__button"><i class="fa fa-bars"></i></a>
+                    		<a control control-add-sticker title="Inserir stickers" class="controls__button"><i class="fa fa-sticky-note"></i></a>
+                    		<a control control-add-text title="Inserir texto" class="controls__button"><i class="fa fa-font"></i></a>
+                    	</nav>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </form>
+    <script src="dist/js/vendor.js"></script>
+    <script src="dist/js/app.js"></script>
+</body>
+
+</html>
