@@ -15,6 +15,10 @@
 		{	
 			"name": "Thumbs Up", 
 			"source": "img-sticker-thumbsup.png"
+		},
+		{	
+			"name": "Cuphead", 
+			"source": "img-sticker-cuphead.png"
 		}
 	]
 }
