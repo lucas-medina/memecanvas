@@ -1,0 +1,46 @@
+.stickers {
+	box-shadow: 0px 3px 2px rgba(0,0,0,.2);
+	&:before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: -8px;
+		border-right: 8px solid #f2f2f2;
+		border-bottom: 8px solid transparent;
+	}
+	&__wrapper {
+		padding: 8px 8px 4px;
+		border-radius: 0px 4px 4px 4px;
+		background-color: #f2f2f2;
+		display: flex;
+		justify-content: flex-start;
+		flex-flow: row wrap;
+		width: 250px;
+		box-sizing: border-box;
+		min-height: 120px;
+		&.loading {
+			justify-content: center;
+			align-items: center;
+		}
+	}
+	&__loadingicon {
+		display: block;
+		width: 64px;
+	}
+	&__item {
+		cursor: pointer;
+		margin-left: 4px;
+		margin-right: 4px;
+		margin-bottom: 4px;
+		position: relative;
+		padding: 4px;
+		&:hover {
+			background-color: rgba(0,0,0,.05);
+		}
+	}
+	&__itemthumb {
+		width: auto;
+		height: 50px;
+		display: block;
+	}
+}

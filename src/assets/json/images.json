@@ -1,0 +1,20 @@
+{
+	"stickers" : [
+		{	
+			"name": "Heart", 
+			"source": "img-sticker-heart.png"
+		},
+		{	
+			"name": "Trollface", 
+			"source": "img-sticker-troll.png"
+		},
+		{	
+			"name": "State of art", 
+			"source": "img-sticker-sanic.png"
+		},
+		{	
+			"name": "Thumbs Up", 
+			"source": "img-sticker-thumbsup.png"
+		}
+	]
+}

@@ -1,5 +1,8 @@
 .controls {
 	background-color: #4d395f;
+	&__buttonwrap {
+		position: relative;
+	}
 	&__button {
 		font-size: 24px;
 		color: #fff;

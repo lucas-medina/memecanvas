@@ -6,6 +6,7 @@ const App = (() => {
 
 	const canvas = new fabric.Canvas('memeGenerator');
 	let canvasCurrentObject;
+	let stickersObject;
 
 	const app = {
 		init(){
@@ -13,12 +14,18 @@ const App = (() => {
 			app.bind();
 		},
 		bind(){
+			canvas.on('object:selected', (fabricEvent) => {
+				Canvas.assignSelected(fabricEvent.target);
+			});
 			document.querySelector('.canvas-action__fileinput').addEventListener('change', Canvas.getBaseImage);
 			
 			document.querySelector('[ui-control-upload]').addEventListener('click', UIControls.upload);
 			document.querySelector('[ui-control-expand]').addEventListener('click', UIControls.expand);
 			document.querySelector('[ui-control-centerv]').addEventListener('click', UIControls.centerV);
 			document.querySelector('[ui-control-centerh]').addEventListener('click', UIControls.centerH);
+			document.querySelector('[ui-control-sticker]').addEventListener('click', UIControls.handleStickers);
+
+			document.querySelector('.stickers').addEventListener('click', Stickers.addSticker);
 		}
 	}
 
@@ -30,8 +37,14 @@ const App = (() => {
 			canvas.selectionColor = '#3498db';
 			canvas.selectionBorderColor = '#34495e';
   			canvas.selectionLineWidth = 5;
+  			canvas.preserveObjectStacking = true;
 
 			fabric.Object.prototype.transparentCorners = false;
+			fabric.Object.prototype.borderColor = '#555';
+			fabric.Object.prototype.cornerColor = '#f2f2f2';
+			fabric.Object.prototype.cornerStyle = 'circle';
+			fabric.Object.prototype.centeredRotation = true;
+			fabric.Object.prototype.lockUniScaling = true;
 		},
 		getBaseImage(event){
 			if (event.target.files.length == 0){
@@ -54,13 +67,9 @@ const App = (() => {
 
 					// Setting target rendering
 					let target = img.set({
-						transparentCorners: false,
-						cornerStyle: 'circle',
-						cornerColor: '#3498db',
 						hasControls: true,
 						selectable: true,
 						lockUniScaling: true,
-						centeredScaling: true,
 						centeredRotation: true
 					});
 
@@ -78,7 +87,7 @@ const App = (() => {
 					// CHANGE THIS LATER!
 					canvas.renderAll();
 
-					canvas.forEachObject(function(obj) {
+					canvas.forEachObject((obj) => {
 						var setCoords = obj.setCoords.bind(obj);
 						obj.on({
 							moving: setCoords,
@@ -86,11 +95,6 @@ const App = (() => {
 							rotating: setCoords
 						});
 				    });
-
-					// Defining canvasCurrentObject
-					canvasCurrentObject = canvas.getActiveObject();
-					console.log(canvasCurrentObject);
-
 				});
 
 				$app.classList.add('has-input');
@@ -100,6 +104,20 @@ const App = (() => {
 			canvas.clear();
 			reader.readAsDataURL(file);
 
+		},
+
+		drawStickerToCanvas(imageNode){
+			let sticker = new fabric.Image(imageNode, {
+				left: 50,
+				top: 50
+			});
+
+			sticker.scaleToWidth(canvas.width/4);
+
+			canvas.add(sticker).setActiveObject(sticker);
+		},
+		assignSelected(object){
+			canvasCurrentObject = object;
 		}
 	}
 
@@ -121,6 +139,67 @@ const App = (() => {
 		},
 		centerV(){
 			canvasCurrentObject.centerV().setCoords();
+		},
+		handleStickers(){
+			let $parent = this.parentNode;
+			$parent.classList.toggle('showing-stickers');
+
+			if ($parent.classList.contains('showing-stickers')){
+				Stickers.fetchStickers();	
+			}
+		}
+	}
+
+	const Stickers = {
+		fetchStickers(){
+			// if sticker list not set, set then list action
+			if (!stickersObject){
+				fetch('/dist/assets/json/images.json').then((response) => {
+					return response.json();
+				}).then((obj) => {
+					stickersObject = obj;
+					Stickers.listStickers();
+				});
+			}
+		},
+		listStickers(){
+			// settings elem and list
+			let stickers = stickersObject.stickers;
+			let stickerWrapper = document.querySelector('.stickers__wrapper');
+			let isStickersReady = false;
+
+			// Loop the stickers list
+			stickers.map((item, index) => {
+				// define item elem
+
+				let stickerItem = document.createElement('div');
+				stickerItem.className = "stickers__item";
+				stickerItem.setAttribute('data-info', item.name);
+
+				// thumb elem
+				let stickerItemThumb = document.createElement('img');
+				stickerItemThumb.className = "stickers__itemthumb";
+				stickerItemThumb.src = `/dist/assets/images/${item.source}`;
+
+				// add thumb to item and write
+				stickerItem.appendChild(stickerItemThumb);
+				stickerItemThumb.onload = () => {
+					console.log('image loaded');
+					if (!isStickersReady){
+						isStickersReady = true;
+						stickerWrapper.classList.remove('loading');
+						stickerWrapper.innerHTML = '';
+					}
+					stickerWrapper.appendChild(stickerItem);
+				}
+			});
+		},
+		addSticker(event){
+			let $elem = event.target.closest('.stickers__item');
+			if ($elem !== null){
+				let imageNode = $elem.querySelector('img');
+				Canvas.drawStickerToCanvas(imageNode);
+			}
 		}
 	}
 

@@ -8,6 +8,7 @@
 	margin: 0 auto;
 	&.for-canvas {
 		max-width: 512px;
+		perspective: 1000px;
 	}
 }
 .canvaswrapper {
@@ -54,11 +55,11 @@
 			opacity: 1;
 			transform: translateX(100%);
 		}
-		.controls__button[ui-control-add-sticker]{
+		.controls__button[ui-control-sticker]{
 			color: #ff2f2f;
 			transition: .2s ease;
 			i {
-				transition: .2s cubic-bezier(0.78, -0.4, 0.24, 1.45) transform;
+				transition: .25s cubic-bezier(0.19, 1.04, 0.74, 1.2) transform;
 			}
 			&:hover {
 				color: white;
@@ -68,5 +69,32 @@
 				}
 			}
 		}
+		.showing-stickers {
+			.controls__button[ui-control-sticker]{
+				color: white;
+				background-color: #ff2f2f;
+			}
+			.controls__button[ui-control-sticker] i {
+				transform: scale(1.1);
+			}
+		}
 	}
+}
+.showing-stickers {
+	perspective: 1000px;
+}
+.controls__stickers {
+	position: absolute;
+	visibility: hidden;
+	opacity: 0;
+	top: 4px;
+	left: calc(100% + 8px);
+	transform: translateX(-16px) rotateY(25deg) rotateZ(-2deg);
+	transform-origin: 0 0;
+	transition: .25s ease;
+	.showing-stickers & {
+		opacity: 1;
+		visibility: visible;
+		transform: translateX(0px) rotateY(0deg);
+	}	
 }
